@@ -37,6 +37,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Simple_Caculator_App\Simple_Caculator_App.csproj" />
+    <ProjectReference Include="..\Simple Caculator App\Simple Caculator App.csproj" />
   </ItemGroup>
 </Project>
