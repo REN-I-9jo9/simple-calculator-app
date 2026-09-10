@@ -3,14 +3,34 @@
                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                 xmlns:vm="using:Simple_Caculator_App.ViewModels"
-                mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+                mc:Ignorable="d" d:DesignWidth="360" d:DesignHeight="780"
                 x:Class="Simple_Caculator_App.Views.MainView"
                 x:DataType="vm:MainViewModel">
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
-to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainViewModel />
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <Grid ColumnDefinitions="*,*,*,*,*" RowDefinitions="*,100,100,100,100" Margin="20">
+        <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" Margin="5,40" Text="{Binding Text}" FontSize="30" HorizontalAlignment="Stretch" TextAlignment="Right" VerticalAlignment="Bottom" />
+        <Button Grid.Column="0" Grid.Row="3" Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding Number1Content}" CommandParameter="{Binding Number1Content}" Command="{Binding InputCommand}"></Button>
+        <Button Grid.Column="1" Grid.Row="3" Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding Number2Content}" CommandParameter="{Binding Number2Content}" Command="{Binding InputCommand}"></Button>
+        <Button Grid.Column="2" Grid.Row="3" Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding Number3Content}" CommandParameter="{Binding Number3Content}" Command="{Binding InputCommand}"></Button>
+        <Button Grid.Column="0" Grid.Row="2" Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding Number4Content}" CommandParameter="{Binding Number4Content}" Command="{Binding InputCommand}"></Button>
+        <Button Grid.Column="1" Grid.Row="2" Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding Number5Content}" CommandParameter="{Binding Number5Content}" Command="{Binding InputCommand}"></Button>
+        <Button Grid.Column="2" Grid.Row="2" Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding Number6Content}" CommandParameter="{Binding Number6Content}" Command="{Binding InputCommand}"></Button>
+        <Button Grid.Column="0" Grid.Row="1" Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding Number7Content}" CommandParameter="{Binding Number7Content}" Command="{Binding InputCommand}"></Button>
+        <Button Grid.Column="1" Grid.Row="1" Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding Number8Content}" CommandParameter="{Binding Number8Content}" Command="{Binding InputCommand}"></Button>
+        <Button Grid.Column="2" Grid.Row="1" Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding Number9Content}" CommandParameter="{Binding Number9Content}" Command="{Binding InputCommand}"></Button>
+        <Button Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding Number0Content}" CommandParameter="{Binding Number0Content}" Command="{Binding InputCommand}"></Button>
+        <Button Grid.Column="2" Grid.Row="4" Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding DotContent}" CommandParameter="{Binding DotContent}" Command="{Binding InputCommand}"></Button>
+        <Button Grid.Column="3" Grid.Row="1" Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding OperatorPlusContent}" CommandParameter="{Binding OperatorPlusContent}" Command="{Binding InputCommand}"></Button>
+        <Button Grid.Column="4" Grid.Row="1" Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding OperatorSubtractContent}" CommandParameter="{Binding OperatorSubtractContent}" Command="{Binding InputCommand}"></Button>
+        <Button Grid.Column="3" Grid.Row="2" Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding OperatorMultiplyContent}" CommandParameter="{Binding OperatorMultiplyContent}" Command="{Binding InputCommand}"></Button>
+        <Button Grid.Column="4" Grid.Row="2" Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding OperatorDivideContent}" CommandParameter="{Binding OperatorDivideContent}" Command="{Binding InputCommand}"></Button>
+        <Button Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="2" Grid.RowSpan="1" Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Command="{Binding DeleteCommand}" Content="backspace"></Button>
+        <Button Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="2" Grid.RowSpan="1" Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Command="{Binding ResultCommand}" Content="="></Button>
+    </Grid>
+
 </UserControl>
