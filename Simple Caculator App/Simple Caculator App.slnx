@@ -1,0 +1,9 @@
+<Solution>
+  <Project Path="Simple Caculator App.Android/Simple Caculator App.Android.csproj">
+    <Deploy />
+  </Project>
+  <Project Path="Simple Caculator App.Browser/Simple Caculator App.Browser.csproj" />
+  <Project Path="Simple Caculator App.Desktop/Simple Caculator App.Desktop.csproj" />
+  <Project Path="Simple Caculator App.iOS/Simple Caculator App.iOS.csproj" />
+  <Project Path="Simple Caculator App/Simple Caculator App.csproj" />
+</Solution>
