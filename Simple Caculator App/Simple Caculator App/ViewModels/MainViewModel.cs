@@ -1,18 +1,27 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Simple_Caculator_App.Models;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Xml.Linq;
 
 namespace Simple_Caculator_App.ViewModels
 {
     public partial class MainViewModel : ViewModelBase
     {
+        public MainViewModel()
+        {
+            TokenList.CollectionChanged += TokenList_CollectionChanged;
+        }
+
+        private void TokenList_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(TokenList));
+        }
+
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(ResultCommand))]
         [NotifyCanExecuteChangedFor(nameof(DeleteCommand))]
-        private string _text = "";
+        private ObservableCollectionEx _tokenList = new();
 
         [ObservableProperty]
         private string _number0Content = "0";
@@ -64,71 +73,74 @@ namespace Simple_Caculator_App.ViewModels
         [RelayCommand(CanExecute = nameof(CanUseButton))]
         private void Input(string input)
         {
-            Text += input;
+            if (!TokenList.Any())
+            {
+                TokenList.Add(input);
+            }
+            else
+            {
+                switch (input)
+                {
+                    case "+":
+                    case "-":
+                    case "*":
+                    case "/":
+                        TokenList.Add(input);
+                        break;
+                    default:
+                        var lastToken = TokenList[TokenList.Count - 1];
+                        if (lastToken.Text.Contains('+') || lastToken.Text.Contains('-') || lastToken.Text.Contains('*') || lastToken.Text.Contains('/'))
+                            TokenList.Add(input);
+                        else
+                        {
+                            lastToken += input;
+                            TokenList[TokenList.Count - 1] = lastToken;
+                        }
+                        break;
+                }
+            }
         }
 
         private bool VaildEquation()
         {
-            var strs = Text.Split(['+', '-', '*', '/']);
-            if (strs.Any(str =>
-            {
-                return !decimal.TryParse(str, out _);
-            }))
-                return false;
             return true;
         }
 
-        private bool TextNotEmpty() => !string.IsNullOrEmpty(Text);
+        private bool TextNotEmpty() => true;
 
         [RelayCommand(CanExecute = nameof(TextNotEmpty))]
         private void Delete()
         {
-            Text = Text.Substring(0, Text.Length - 1);
+            var lastToken = TokenList[TokenList.Count - 1];
+            if (lastToken.Length > 1)
+                TokenList[TokenList.Count - 1] = lastToken.Substring(0, lastToken.Length - 1);
+            else
+                TokenList.RemoveAt(TokenList.Count - 1);
         }
 
         [RelayCommand(CanExecute = nameof(VaildEquation))]
         private void Result()
         {
             //infix to postfix
-            var tokens = new List<string>();
-            var text = Text;
-            while (text.Length > 0)
-            {
-                var operatorIndex = text.IndexOfAny(['+', '-', '*', '/']);
-                switch (operatorIndex)
-                {
-                    case 0:
-                        tokens.Add($"{text[0]}");
-                        text = text.Substring(1);
-                        break;
-                    case -1:
-                        tokens.Add(text);
-                        text = "";
-                        break;
-                    default:
-                        tokens.Add(text.Substring(0, operatorIndex));
-                        text = text.Substring(operatorIndex);
-                        break;
-                }
-            }
+            var tokens = TokenList.ToList();
             var stack = new Stack<string>();
             var postfix = new List<string>();
             for (var i = 0; i < tokens.Count; i++)
             {
-                switch (tokens[i])
+                switch (tokens[i].Text)
                 {
                     case "+":
                     case "-":
                         while (stack.Any())
                             postfix.Add(stack.Pop());
-                        stack.Push(tokens[i]);
+                        stack.Push(tokens[i].Text);
                         break;
                     case "*":
                     case "/":
-                        stack.Push(tokens[i]);
+                        stack.Push(tokens[i].Text);
                         break;
                     default:
-                        postfix.Add(tokens[i]);
+                        postfix.Add(tokens[i].Text);
                         break;
                 }
             }
@@ -162,7 +174,8 @@ namespace Simple_Caculator_App.ViewModels
                 }
             }
             var result = resultstack.Pop();
-            Text = $"{result}";
+            TokenList.Clear();
+            TokenList.Add($"{result}");
         }
     }
 }
